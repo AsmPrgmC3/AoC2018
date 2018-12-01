@@ -1,5 +1,7 @@
 package asmprgmc3.aoc2018
 
+import io.kotlintest.TestContext
+import io.kotlintest.specs.AbstractStringSpec
 import java.io.File
 
 object TestCases {
@@ -12,6 +14,14 @@ object TestCases {
             val lines = it.readLines()
 
             TestCase(it.nameWithoutExtension, lines[0], lines.drop(1))
+        }
+    }
+
+    fun AbstractStringSpec.testLoop(day: Int, part: Int, evaluate: TestContext.(TestCases.TestCase) -> Unit) {
+        for (test in TestCases.getTestCases(day, part)) {
+            "Day $day Part $part > ${test.name}" {
+                evaluate(test)
+            }
         }
     }
 }
