@@ -20,4 +20,17 @@ object Day2 {
 
         return twos * threes
     }
+
+    fun part2(input: List<String>): String {
+        val lineLength = input[0].length
+        for (i in input.indices) {
+            for (j in (i + 1) until input.size) {
+                val equal = input[i].filterIndexed { pos, char -> input[j][pos] == char }
+                if (equal.length == lineLength - 1) {
+                    return equal
+                }
+            }
+        }
+        throw IllegalArgumentException("No two IDs differ at exactly 1 position")
+    }
 }

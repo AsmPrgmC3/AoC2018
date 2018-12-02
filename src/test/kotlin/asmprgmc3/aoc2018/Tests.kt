@@ -16,4 +16,8 @@ class Tests : StringSpec({
     testLoop(2, 1) { test ->
         Day2.part1(test.input) shouldBe test.expected.toInt()
     }
+
+    testLoop(2, 2) { test ->
+        Day2.part2(test.input) shouldBe test.expected
+    }
 })
