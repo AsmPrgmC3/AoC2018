@@ -19,7 +19,7 @@ object Day1 {
         fun subOp(number: Int) = { value: Int -> value - number }
 
         var freq = 0
-        val freqs = mutableSetOf(0)
+        val freqs = HashSet<Int>()
         var i = -1
 
         val ops = input.map {
@@ -31,18 +31,12 @@ object Day1 {
             }
         }
 
-        while (true) {
-            i++
-            if (i == ops.size) {
-                i = 0
-            }
+        while (freqs.add(freq)) { // HashSet#add returns false if the freq is already in the Set
+            i = (i + 1) % ops.size
 
             freq = ops[i](freq)
-
-            if (freqs.contains(freq)) {
-                return freq
-            }
-            freqs.add(freq)
         }
+
+        return freq
     }
 }
