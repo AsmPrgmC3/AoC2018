@@ -5,11 +5,11 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class Tests : StringSpec({
-    testLoop(1, 1) {test ->
+    testLoop(1, 1) { test ->
         Day1.part1(test.input) shouldBe test.expected.toInt()
     }
 
-    testLoop(1, 2) {test ->
+    testLoop(1, 2) { test ->
         Day1.part2(test.input) shouldBe test.expected.toInt()
     }
 
@@ -19,5 +19,9 @@ class Tests : StringSpec({
 
     testLoop(2, 2) { test ->
         Day2.part2(test.input) shouldBe test.expected
+    }
+
+    testLoop(3, 1) { test ->
+        Day3.part1(test.input) shouldBe test.expected.toInt()
     }
 })
