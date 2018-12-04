@@ -9,14 +9,14 @@ object Day3 {
                 .asSequence()
                 .map { regex.find(it)!! }
                 .map {
-                    val x = it.groups["x"]!!.value.toInt()
-                    val y = it.groups["y"]!!.value.toInt()
+                    val x = it.groupInt("x")
+                    val y = it.groupInt("y")
                     Claim(
-                            it.groups["id"]!!.value.toInt(),
+                            it.groupInt("id"),
                             x,
                             y,
-                            x - 1 + it.groups["w"]!!.value.toInt(),
-                            y - 1 + it.groups["h"]!!.value.toInt()
+                            x - 1 + it.groupInt("w"),
+                            y - 1 + it.groupInt("h")
                     )
                 }
                 .toList()
