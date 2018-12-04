@@ -5,6 +5,8 @@ import java.time.LocalDate
 object Day4 {
     private data class Record(val date: String, val guard: Int, val from: Int, val to: Int) // Represents a time a certain guard is asleep
 
+    private data class Records(val guards: List<Int>, val records: List<Record>)
+
     private abstract class InputLine
     private data class BeginShift(val guard: Int, val date: String) : InputLine()
     private data class BeginSleep(val date: String, val minute: Int) : InputLine()
@@ -35,9 +37,9 @@ object Day4 {
         }
     }
 
-    fun part1(input: List<String>): Int {
-
+    private fun getRecords(input: List<String>): Records {
         val happenings = parseInput(input)
+
         @Suppress("UNCHECKED_CAST")
         val shifts = happenings.filter { it is BeginShift } as List<BeginShift>
         @Suppress("UNCHECKED_CAST")
@@ -62,6 +64,12 @@ object Day4 {
 
         val guards = records.asSequence().map { it.guard }.distinct().toList()
 
+        return Records(guards, records)
+    }
+
+    fun part1(input: List<String>): Int {
+        val (guards, records) = getRecords(input)
+
         val mostSleepyGuard = guards.maxBy { guard ->
             records
                     .asSequence()
@@ -79,5 +87,21 @@ object Day4 {
         }!!
 
         return mostSleepyGuard * mostSleepyMinute
+    }
+
+    fun part2(input: List<String>): Int {
+        val (guards, records) = getRecords(input)
+
+
+        val (guard, minute) = (1..59).flatMap { minute -> guards.map { Pair(it, minute) } }
+                .maxBy { (guard, minute) ->
+                    records
+                            .asSequence()
+                            .filter { it.guard == guard }
+                            .filter { minute >= it.from && minute <= it.to }
+                            .count()
+                }!!
+
+        return guard * minute
     }
 }
